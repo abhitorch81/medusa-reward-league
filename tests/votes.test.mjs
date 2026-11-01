@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {parseVote,tallyVotes} from '../dist/votes.js';
+test('chat commands have bounded rewards and cannot execute arbitrary text',()=>{assert.deepEqual(parseVote('!reward delivery 8'),{rule:'delivery',value:8});for(const text of ['!reward movement 8','!reward pickup -1','!reward pickup 99','!reward delivery 2 extra','<script>'])assert.equal(parseVote(text),null);});
+test('one viewer has one latest vote; ties resolve deterministically',()=>{const votes=new Map();votes.set('a',parseVote('!reward pickup 3'));votes.set('a',parseVote('!reward pickup 0'));votes.set('b',parseVote('!reward pickup 3'));assert.deepEqual(tallyVotes(votes,{pickup:1,delivery:8,movement:0}),{pickup:0,delivery:8,movement:0});});

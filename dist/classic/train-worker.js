@@ -1,0 +1,2 @@
+import {newPolicy,trainBatch,rng,evaluate} from './rl.js';
+self.onmessage=({data})=>{const {weights,seed=42,total=6000}=data;const q=newPolicy(),random=rng(seed),history=[];for(let start=0;start<total;start+=200){trainBatch(q,weights,start,Math.min(200,total-start),total,random);const metrics=evaluate(q,weights);history.push({episode:Math.min(start+200,total),...metrics});self.postMessage({type:'progress',episode:Math.min(start+200,total),total,metrics});}self.postMessage({type:'complete',q,weights,seed,total,history,metrics:evaluate(q,weights)});};

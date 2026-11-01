@@ -1,0 +1,23 @@
+# Paid alternative. Review Render's displayed cost before deployment.
+# One instance: SQLite lives on the attached persistent disk.
+services:
+  - type: web
+    name: medusa-reward-league
+    runtime: node
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    disk:
+      name: medusa-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DB_PATH
+        value: /var/data/medusa/derby.sqlite

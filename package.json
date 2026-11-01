@@ -1,0 +1,19 @@
+{
+  "name": "medusa-reward-league",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "dev": "node server.mjs",
+    "build": "node scripts/vendor.mjs && node scripts/build-showtime.mjs",
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0",
+    "gsap": "3.13.0"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}
